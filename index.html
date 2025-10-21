@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FPV Throttle Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+    <script type="module" src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>FPV Throttle Viewer</h1>
+      <p>
+        Upload an MP4 video, select the on-screen number area, and generate a
+        throttle timeline graph.
+      </p>
+    </header>
+    <main class="app">
+      <section class="controls">
+        <label class="file-input">
+          <span>Choose MP4 video…</span>
+          <input id="video-input" type="file" accept="video/mp4" />
+        </label>
+        <div class="control-row">
+          <label for="frame-step">
+            Frame interval (ms)
+            <input id="frame-step" type="number" min="16" step="16" value="200" />
+          </label>
+          <button id="start-btn" disabled>Analyze video</button>
+          <button id="download-btn" disabled>Download CSV</button>
+        </div>
+        <div class="status">
+          <progress id="progress" value="0" max="1"></progress>
+          <span id="status-text">Load a video to begin.</span>
+        </div>
+      </section>
+      <section class="workspace">
+        <div class="video-wrapper">
+          <video id="video" controls></video>
+          <canvas id="selection-canvas"></canvas>
+        </div>
+        <div class="help-text">
+          <h2>How to use</h2>
+          <ol>
+            <li>Load an MP4 video that displays a numeric throttle indicator.</li>
+            <li>
+              Pause the video on a frame that clearly shows the number, then drag
+              on the video to draw the region containing the number.
+            </li>
+            <li>
+              Adjust the frame interval if needed, then click <strong>Analyze</strong>
+              to extract throttle values frame by frame.
+            </li>
+          </ol>
+          <p>
+            The recognized values (0-100) will appear in a line chart and table
+            below. You can download the results as CSV.
+          </p>
+        </div>
+      </section>
+      <section class="results">
+        <h2>Throttle timeline</h2>
+        <canvas id="chart"></canvas>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Time (s)</th>
+                <th>Throttle</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
