@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@paddlejs-models/ocr@1.2.4/lib/index.js" defer></script>
     <script type="module" src="app.js" defer></script>
   </head>
   <body>
@@ -28,6 +29,24 @@
             Frame interval (ms)
             <input id="frame-step" type="number" min="16" step="16" value="200" />
           </label>
+          <label for="ocr-engine">
+            OCR engine
+            <select id="ocr-engine">
+              <option value="tesseract" selected>Tesseract.js</option>
+              <option value="paddle">PaddleOCR (web)</option>
+            </select>
+          </label>
+          <label for="value-min">
+            Min value
+            <input id="value-min" type="number" step="0.01" value="0" />
+          </label>
+          <label for="value-max">
+            Max value
+            <input id="value-max" type="number" step="0.01" value="100" />
+          </label>
+          <button id="toggle-mode-btn" type="button" aria-pressed="true" disabled>
+            Selection mode
+          </button>
           <button id="start-btn" disabled>Analyze video</button>
           <button id="download-btn" disabled>Download CSV</button>
         </div>
@@ -46,8 +65,13 @@
           <ol>
             <li>Load an MP4 video that displays a numeric throttle indicator.</li>
             <li>
-              Pause the video on a frame that clearly shows the number, then drag
-              on the video to draw the region containing the number.
+              Pause the video on a frame that clearly shows the number. Use the
+              mode toggle to switch between video controls and drawing, then drag
+              on the video to outline the number region.
+            </li>
+            <li>
+              (Optional) Adjust the OCR engine, frame interval, or expected value range
+              to fit your data (e.g., voltage readings).
             </li>
             <li>
               Adjust the frame interval if needed, then click <strong>Analyze</strong>
@@ -61,14 +85,14 @@
         </div>
       </section>
       <section class="results">
-        <h2>Throttle timeline</h2>
+        <h2>Value timeline</h2>
         <canvas id="chart"></canvas>
         <div class="table-container">
           <table>
             <thead>
               <tr>
                 <th>Time (s)</th>
-                <th>Throttle</th>
+                <th>Value</th>
               </tr>
             </thead>
             <tbody id="results-body"></tbody>

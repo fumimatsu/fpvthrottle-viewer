@@ -6,7 +6,9 @@ A lightweight, client-side web application that extracts throttle (0-100) readin
 
 - Upload any MP4 video directly in the browser (no server required)
 - Draw a bounding box around the on-screen numeric throttle indicator
-- Configure the sampling interval and run OCR frame-by-frame with Tesseract.js
+- Define the expected numeric range (min/max) to cover data such as throttle, voltage, or other readings
+- Switch between Tesseract.js and PaddleOCR (WebAssembly) depending on your accuracy/performance needs
+- Configure the sampling interval and run OCR frame-by-frame entirely in the browser
 - Visualize results on an interactive Chart.js line graph
 - Review a table of recognized values and download them as CSV
 
@@ -15,10 +17,11 @@ A lightweight, client-side web application that extracts throttle (0-100) readin
 1. Open `index.html` in a modern desktop browser (Chrome, Edge, or Firefox).
 2. Choose an MP4 file that includes a numeric throttle readout.
 3. Pause on a frame where the number is visible and drag over it to define the region of interest.
-4. (Optional) Adjust the frame interval to balance accuracy and processing time.
-5. Click **Analyze video** to extract throttle values, visualize them, and export the CSV if needed.
+4. (Optional) Adjust the frame interval, select the OCR engine, or fine-tune the expected min/max value range.
+5. Click **Analyze video** to extract the values, visualize them, and export the CSV if needed.
 
-> **Tip:** For best recognition accuracy, ensure the throttle digits have strong contrast with the background and keep the selection tight around the numbers.
+> **Tip:** For best recognition accuracy, ensure the digits have strong contrast with the background and keep the selection tight around the numbers.
+> **Note:** When you first choose PaddleOCR the model weights are downloaded in the browser; this may take up to tens of seconds depending on your network.
 
 ### Running inside this workspace
 

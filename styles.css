@@ -107,6 +107,15 @@ body {
   font-size: 1rem;
 }
 
+.control-row select {
+  min-width: 160px;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  font-size: 1rem;
+  background-color: #fff;
+}
+
 button {
   padding: 0.75rem 1.4rem;
   border-radius: 12px;
@@ -166,6 +175,11 @@ video {
   position: absolute;
   inset: 0;
   cursor: crosshair;
+}
+
+#selection-canvas.selection-disabled {
+  pointer-events: none;
+  cursor: default;
 }
 
 .help-text h2 {
